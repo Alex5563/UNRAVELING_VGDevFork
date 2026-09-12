@@ -180,6 +180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2dede3d9e9a348c3b6b0a3e16eba74c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BadParticleManager
+  playerHead: {fileID: 330585546}
   particlePrefab: {fileID: 2126225429}
   playerHead: {fileID: 130464646}
   teacher: {fileID: 2057058723}
@@ -2169,7 +2170,8 @@ MonoBehaviour:
   attackDistance: 0.5
   hitRadius: 0.4
   isHit: 0
-  playerHead: {fileID: 130464646}
+  playerHead: {fileID: 330585546}
+  attackOffsetRange: 0.5
   paranoia: {fileID: 0}
   paranoiaIncrease: 20
 --- !u!114 &2126225430

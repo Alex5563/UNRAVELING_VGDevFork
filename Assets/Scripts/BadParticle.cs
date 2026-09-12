@@ -25,6 +25,8 @@ public class BadParticle : MonoBehaviour
     private Vector3 targetPosition;
     private Vector3 velocity;
     private float bobOffset;
+    public float attackOffsetRange = 0.5f;
+    private Vector3 attackOffset;
 
     //paranoia increase
     public ParanoiaMeter paranoia;
@@ -54,6 +56,14 @@ public class BadParticle : MonoBehaviour
     //Called by BadParticleManager when this one is chosen
     public void Attack(Transform target)
     {
+        attackTarget = target;
+        currentSpeed = attackSpeed;
+
+        attackOffset = new Vector3(
+            Random.Range(-attackOffsetRange, attackOffsetRange),
+            Random.Range(-attackOffsetRange, attackOffsetRange),
+            Random.Range(-attackOffsetRange, attackOffsetRange)
+        );
         attackStart = transform.position;   // where we launched from
         attackPoint = target.position;      // lock the target NOW (this is the dodge fix)
         attackTime = 0f;
@@ -72,6 +82,11 @@ public class BadParticle : MonoBehaviour
     {
         attackTime += Time.deltaTime;
 
+        transform.position = Vector3.MoveTowards(
+            transform.position,
+            attackTarget.position + attackOffset,
+            currentSpeed * Time.deltaTime
+        );
         // ask the plugged-in variant where we should be
         transform.position = movement.GetPosition(attackStart, attackPoint, attackTime);
 
