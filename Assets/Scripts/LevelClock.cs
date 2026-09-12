@@ -26,21 +26,25 @@ public class LevelClock : MonoBehaviour
         {
             stage = 2;
             onStageChange?.Invoke(stage);
+            Debug.Log("stage is " + stage);
         }
         if (stage < 3 && Time.timeSinceLevelLoad >= stage1Duration + stage2Duration)
         {
             stage = 3;
             onStageChange?.Invoke(stage);
+            Debug.Log("stage is " + stage);
         }
         if (stage < 4 && Time.timeSinceLevelLoad >= stage1Duration + stage2Duration + stage3Duration)
         {
             stage = 4;
             onStageChange?.Invoke(stage);
+            Debug.Log("stage is " + stage);
         }
         if (stage < 5 && Time.timeSinceLevelLoad >= stage1Duration + stage2Duration + stage3Duration + staredownDuration)
         {
             stage = 5;
             onStageChange?.Invoke(5);
+            Debug.Log("stage is " + stage);
         }
     }
 }
