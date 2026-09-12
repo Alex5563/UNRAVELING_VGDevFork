@@ -181,7 +181,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BadParticleManager
   playerHead: {fileID: 330585546}
+  particlePrefab: {fileID: 2126225429}
+  playerHead: {fileID: 130464646}
   teacher: {fileID: 2057058723}
+  roomBounds: {fileID: 428869482}
+  particleCount: 4
   minAttackDelay: 3
   maxAttackDelay: 8
   cooldown: 2
@@ -953,99 +957,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 763435372}
   m_CullTransparentMesh: 1
---- !u!1001 &768973085
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1923840467997593510, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 1514480549}
-    - target: {fileID: 1923840467997593510, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: playerRay
-      value: 
-      objectReference: {fileID: 1514480552}
-    - target: {fileID: 1923840467997593510, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: playerHead
-      value: 
-      objectReference: {fileID: 330585546}
-    - target: {fileID: 1923840467997593510, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: roomBounds
-      value: 
-      objectReference: {fileID: 428869482}
-    - target: {fileID: 1923840467997593510, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: attackSpeed
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1923840467997593510, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: acceleration
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1923840467997593510, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: maxAttackDelay
-      value: 23
-      objectReference: {fileID: 0}
-    - target: {fileID: 1923840467997593510, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: minAttackDelay
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 1994453200387658174, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_Name
-      value: BadParticle (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1994453200387658174, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517973248618873926, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.92662
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517973248618873926, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 4.54343
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517973248618873926, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 6.79
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517973248618873926, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517973248618873926, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517973248618873926, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517973248618873926, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517973248618873926, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517973248618873926, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517973248618873926, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1487,99 +1398,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!1001 &1138495776
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1923840467997593510, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 1514480549}
-    - target: {fileID: 1923840467997593510, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: playerRay
-      value: 
-      objectReference: {fileID: 1514480552}
-    - target: {fileID: 1923840467997593510, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: playerHead
-      value: 
-      objectReference: {fileID: 330585546}
-    - target: {fileID: 1923840467997593510, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: roomBounds
-      value: 
-      objectReference: {fileID: 428869482}
-    - target: {fileID: 1923840467997593510, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: attackSpeed
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1923840467997593510, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: acceleration
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1923840467997593510, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: maxAttackDelay
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 1923840467997593510, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: minAttackDelay
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 1994453200387658174, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_Name
-      value: BadParticle (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1994453200387658174, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517973248618873926, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -2.95
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517973248618873926, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 4.54343
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517973248618873926, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 5.89
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517973248618873926, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517973248618873926, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517973248618873926, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517973248618873926, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517973248618873926, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517973248618873926, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517973248618873926, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
 --- !u!1 &1204223020
 GameObject:
   m_ObjectHideFlags: 0
@@ -1707,99 +1525,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1295647611
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1923840467997593510, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 1514480549}
-    - target: {fileID: 1923840467997593510, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: playerRay
-      value: 
-      objectReference: {fileID: 1514480552}
-    - target: {fileID: 1923840467997593510, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: playerHead
-      value: 
-      objectReference: {fileID: 330585546}
-    - target: {fileID: 1923840467997593510, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: roomBounds
-      value: 
-      objectReference: {fileID: 428869482}
-    - target: {fileID: 1923840467997593510, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: attackSpeed
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1923840467997593510, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: acceleration
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1923840467997593510, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: maxAttackDelay
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 1923840467997593510, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: minAttackDelay
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1994453200387658174, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_Name
-      value: BadParticle (3)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1994453200387658174, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517973248618873926, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 2.22
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517973248618873926, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.72
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517973248618873926, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 6.47
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517973248618873926, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517973248618873926, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517973248618873926, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517973248618873926, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517973248618873926, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517973248618873926, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517973248618873926, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 51284c38f22c34187b1088be3f29990e, type: 3}
 --- !u!1 &1514480548
 GameObject:
   m_ObjectHideFlags: 0
@@ -2323,6 +2048,7 @@ GameObject:
   - component: {fileID: 2126225426}
   - component: {fileID: 2126225425}
   - component: {fileID: 2126225429}
+  - component: {fileID: 2126225430}
   m_Layer: 0
   m_Name: BadParticle
   m_TagString: Untagged
@@ -2441,9 +2167,6 @@ MonoBehaviour:
   arriveDistance: 0.4
   floatSpeed: 2
   floatHeight: 0.5
-  attackSpeed: 3
-  acceleration: 10
-  maxAttackSpeed: 12
   attackDistance: 0.5
   hitRadius: 0.4
   isHit: 0
@@ -2451,6 +2174,20 @@ MonoBehaviour:
   attackOffsetRange: 0.5
   paranoia: {fileID: 0}
   paranoiaIncrease: 20
+--- !u!114 &2126225430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126225424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e71969a828fe41ed8009d5d36bdc4ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ParticlePlaceholder
+  speed: 6
+  acceleration: 6
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -2461,9 +2198,6 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 2057058722}
   - {fileID: 2126225428}
-  - {fileID: 1295647611}
-  - {fileID: 1138495776}
-  - {fileID: 768973085}
   - {fileID: 428869481}
   - {fileID: 1117998825}
   - {fileID: 907193417}
