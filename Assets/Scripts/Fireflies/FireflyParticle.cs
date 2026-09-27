@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class FireflyParticle : MonoBehaviour
 {
@@ -9,20 +10,9 @@ public class FireflyParticle : MonoBehaviour
     Approach,
     Hover,
     Attack,
-    Dead,
   };
 
-  [Header("References")]
-  [SerializeField]
-  private Transform _FireflyTarget;
-
-  [SerializeField]
-  private Transform _playerView;
-
   [Header("Firefly Movement Settings")]
-  [SerializeField]
-  private float _turnSpeed = 3f;
-
   [SerializeField]
   private float _moveSpeed = 3f;
 
@@ -30,29 +20,17 @@ public class FireflyParticle : MonoBehaviour
   private float _hoverRange = 4f;
 
   [SerializeField]
-  private float _approachSpread = 1.5f;
-
-  [SerializeField]
-  private float _approachHeightSpread = 0.8f;
+  private float _laneSmoothTime = 0.5f;
 
   [Header("Hover Settings")]
   [SerializeField]
-  private float _hoverTime = 3f;
-
-  [SerializeField]
-  private float _hoverArcAngle = 40f;
+  private float _hoveringTime = 3f;
 
   [SerializeField]
   private float _minHoverDistance = 1.5f;
 
   [SerializeField]
   private float _maxHoverDistance = 3f;
-
-  [SerializeField]
-  private float _minHeightOffset = -0.3f;
-
-  [SerializeField]
-  private float _maxHeightOffset = 0.5f;
 
   [SerializeField]
   private float _bobAmp = 0.15f;
@@ -70,45 +48,69 @@ public class FireflyParticle : MonoBehaviour
   [SerializeField]
   private float _hitRadius = 0.4f;
 
-  private FireflyState _currentState = FireflyState.Approach;
-  private Vector3 _currentDirection;
+  [Header("Safety")]
+  [SerializeField]
+  private float _maxLifetime = 20f;
 
-  private float _hoverTimer;
-  private float _hoverAngle;
+  private IObjectPool<FireflyParticle> _pool;
+  private bool _released;
+
+  private Transform _playerTarget;
+  private Transform _hallway;
+  private Vector2 _lane;
+  private FireflyState _state;
+
+  private Vector2 _laneVelocity;
+  private float _hoverTime;
   private float _hoverDistance;
-  private float _hoverHeight;
+  private float _hoverSide;
   private float _bobSeed;
   private Vector3 _driftVelocity;
-
   private Vector3 _lungeTarget;
-  private Vector3 _approachOffset;
+  private float _lifetime;
 
-  void Start()
+  public void SetPool(IObjectPool<FireflyParticle> owningPool) => _pool = owningPool;
+
+  public void init(Vector2 assignedLane, Transform target, Transform hallwayRef)
   {
-    Vector3 randomOffset = Random.insideUnitSphere;
-    _approachOffset = new Vector3(
-      randomOffset.x * _approachSpread,
-      randomOffset.y * _approachHeightSpread,
-      randomOffset.z * _approachSpread
-    );
+    _lane = assignedLane;
+    _playerTarget = target;
+    _hallway = hallwayRef;
+
+    _state = FireflyState.Approach;
+    _released = false;
+    _laneVelocity = Vector2.zero;
+    _driftVelocity = Vector2.zero;
+    _hoverTime = 0f;
+    _lifetime = 0f;
     _bobSeed = Random.Range(0f, 100f);
-    if (_FireflyTarget != null)
-    {
-      _currentDirection = (_FireflyTarget.position - transform.position).normalized;
-    }
-    else
-    {
-      _currentDirection = transform.forward;
-    }
   }
 
-  // Update is called once per frame
-  void Update()
+  private void Despawn()
   {
-    if (_FireflyTarget == null || _playerView == null)
+    if (_released)
+      return;
+    _released = true;
+
+    if (_pool != null)
+      _pool.Release(this);
+    else
+      Destroy(gameObject);
+  }
+
+  private void Update()
+  {
+    if (_playerTarget == null || _hallway == null)
       return;
 
-    switch (_currentState)
+    _lifetime += Time.deltaTime;
+    if (_lifetime >= _maxLifetime)
+    {
+      Despawn();
+      return;
+    }
+
+    switch (_state)
     {
       case FireflyState.Approach:
         UpdateApproach();
@@ -124,64 +126,57 @@ public class FireflyParticle : MonoBehaviour
 
   private void UpdateApproach()
   {
-    Vector3 toTarget = _FireflyTarget.position - transform.position;
+    Vector3 localPosition = _hallway.InverseTransformPoint(transform.position);
+    float playerZ = _hallway.InverseTransformPoint(_playerTarget.position).z;
 
-    if (toTarget.sqrMagnitude <= _hoverRange * _hoverRange)
+    if (Mathf.Abs(playerZ - localPosition.z) <= _hoverRange)
     {
       EnterHover();
       return;
     }
 
-    Vector3 aimPoint = _FireflyTarget.position + _approachOffset;
-    Vector3 aimTo = aimPoint - transform.position;
-
-    _currentDirection = Vector3.RotateTowards(
-      _currentDirection,
-      aimTo.normalized,
-      _turnSpeed * Time.deltaTime,
-      0f
+    Vector2 xy = Vector2.SmoothDamp(
+      new Vector2(localPosition.x, localPosition.y),
+      _lane,
+      ref _laneVelocity,
+      _laneSmoothTime
     );
+    float z = Mathf.MoveTowards(localPosition.z, playerZ, _moveSpeed * Time.deltaTime);
 
-    transform.position += _currentDirection * _moveSpeed * Time.deltaTime;
+    transform.position = _hallway.TransformPoint(new Vector3(xy.x, xy.y, z));
   }
 
   private void EnterHover()
   {
-    _currentState = FireflyState.Hover;
-    _hoverTimer = _hoverTime;
-    _hoverAngle = Random.Range(-_hoverArcAngle, _hoverArcAngle);
+    _state = FireflyState.Hover;
+    _hoverTime = _hoveringTime;
     _hoverDistance = Random.Range(_minHoverDistance, _maxHoverDistance);
-    _hoverHeight = Random.Range(_minHeightOffset, _maxHeightOffset);
+
+    float myZ = _hallway.InverseTransformPoint(transform.position).z;
+    float playerZ = _hallway.InverseTransformPoint(_playerTarget.position).z;
+    _hoverSide = Mathf.Sign(myZ - playerZ);
+
     _driftVelocity = Vector3.zero;
   }
 
   private void UpdateHover()
   {
-    Vector3 forwardPlane = Vector3.ProjectOnPlane(_playerView.forward, Vector3.up);
-    if (forwardPlane.sqrMagnitude < 0.0001f)
-      forwardPlane = Vector3.ProjectOnPlane(_playerView.up, Vector3.up);
-    forwardPlane.Normalize();
-
-    Vector3 spotDirection = Quaternion.AngleAxis(_hoverAngle, Vector3.up) * forwardPlane;
-
-    Vector3 hoverSpot =
-      _FireflyTarget.position
-      + spotDirection * _hoverDistance
-      + Vector3.up * _hoverHeight
-      + GetBobOffset();
+    float playerZ = _hallway.InverseTransformPoint(_playerTarget.position).z;
+    Vector3 localSpot = new Vector3(_lane.x, _lane.y, playerZ + _hoverSide * _hoverDistance);
+    Vector3 spot = _hallway.InverseTransformPoint(localSpot) + GetBobOffset();
 
     transform.position = Vector3.SmoothDamp(
       transform.position,
-      hoverSpot,
+      spot,
       ref _driftVelocity,
       _smoothDriftTime
     );
 
-    _hoverTimer -= Time.deltaTime;
-    if (_hoverTimer <= 0f)
+    _hoverTime -= Time.deltaTime;
+    if (_hoverTime <= 0)
     {
-      _lungeTarget = _FireflyTarget.position;
-      _currentState = FireflyState.Attack;
+      _lungeTarget = _playerTarget.position;
+      _state = FireflyState.Attack;
     }
   }
 
@@ -204,17 +199,17 @@ public class FireflyParticle : MonoBehaviour
       _lungeSpeed * Time.deltaTime
     );
 
-    if ((_FireflyTarget.position - transform.position).sqrMagnitude <= _hitRadius * _hitRadius)
+    if ((_playerTarget.position - transform.position).sqrMagnitude <= _hitRadius * _hitRadius)
     {
       Debug.Log($"{name} hit the player");
-      gameObject.SetActive(false);
+      Despawn();
       return;
     }
 
     if ((_lungeTarget - transform.position).sqrMagnitude < 0.0001f)
     {
       Debug.Log($"{name} missed");
-      gameObject.SetActive(false);
+      Despawn();
     }
   }
 }
