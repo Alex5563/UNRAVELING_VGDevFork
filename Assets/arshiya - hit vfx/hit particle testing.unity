@@ -298,6 +298,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: hit particles
       objectReference: {fileID: 0}
+    - target: {fileID: 5868216830661475937, guid: 13313bb7ac8f4cd4b802c99faa46e6bc, type: 3}
+      propertyPath: ColorModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5868216830661475937, guid: 13313bb7ac8f4cd4b802c99faa46e6bc, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 0.4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
