@@ -43,6 +43,9 @@ public class BadParticle : MonoBehaviour
     //manager reads to know if attack is done
     public bool IsAttacking => attackTarget != null;
 
+    //REMOVE BEFORE COMMITING
+    [SerializeField] private GameObject hitVfx;
+
     void Start()
     {
         driftPos = transform.position;
@@ -89,6 +92,11 @@ public class BadParticle : MonoBehaviour
             {
                 Debug.Log("HIT");
                 if (paranoia != null) paranoia.Add(paranoiaIncrease);
+                //REMOVE BEFORE COMMITTING
+                Vector3 hitSpawn = new Vector3(transform.position.x, transform.position.y, playerHead.position.z + 1f);
+                GameObject hit = Instantiate(hitVfx, hitSpawn, Quaternion.identity);
+                hit.GetComponent<ParticleSystemRenderer>().material.SetColor("_BaseColor", GetComponent<Renderer>().material.color);
+                //REMOVE BEFORE COMMITING
             }
             else
             {
