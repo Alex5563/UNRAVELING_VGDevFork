@@ -943,7 +943,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7917535192070147477, guid: 3409e0202e3624352a5cfea1a1341a01, type: 3}
       propertyPath: _moveSpeed
-      value: 4
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7917535192070147477, guid: 3409e0202e3624352a5cfea1a1341a01, type: 3}
+      propertyPath: _hoverRange
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7917535192070147477, guid: 3409e0202e3624352a5cfea1a1341a01, type: 3}
       propertyPath: _hoveringTime
@@ -951,11 +955,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7917535192070147477, guid: 3409e0202e3624352a5cfea1a1341a01, type: 3}
       propertyPath: _maxHoverDistance
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7917535192070147477, guid: 3409e0202e3624352a5cfea1a1341a01, type: 3}
       propertyPath: _minHoverDistance
-      value: 2
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 8291657780694287297, guid: 3409e0202e3624352a5cfea1a1341a01, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1227,10 +1231,10 @@ MonoBehaviour:
   _spawnPoint: {fileID: 1540764741}
   _playerTarget: {fileID: 1375031070}
   _hallway: {fileID: 1488761440}
-  _laneMin: {x: -4, y: 1}
-  _laneMax: {x: 4, y: 3.5}
+  _laneMin: {x: -3.5, y: 1}
+  _laneMax: {x: 3.5, y: 3.5}
   _spawnInterval: 1.5
-  _minLaneSpacing: 0.6
+  _minLaneSpacing: 1
   _recentLanesToAvoid: 5
   _laneAttempts: 8
   _defaultCapacity: 32
