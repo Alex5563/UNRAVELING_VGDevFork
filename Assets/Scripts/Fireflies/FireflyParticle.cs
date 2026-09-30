@@ -12,6 +12,8 @@ public class FireflyParticle : MonoBehaviour
     Attack,
   };
 
+  // setting most to all variables to private and only changing it to
+  // public when it is nessessary
   [Header("Firefly Movement Settings")]
   [SerializeField]
   private float _moveSpeed = 3f;
@@ -101,6 +103,7 @@ public class FireflyParticle : MonoBehaviour
   private Vector2 _lane;
   private FireflyState _state;
 
+  // variables needed for the approach state
   private Vector2 _laneVelocity;
   private float _hoverTime;
   private float _hoverDistance;
@@ -109,10 +112,12 @@ public class FireflyParticle : MonoBehaviour
   private Vector3 _lungeTarget;
   private float _lifetime;
 
+  // variables needed for the hover state
   private float _zOffset;
   private float _zOffsetVelocity;
   private Vector2 _hoverXY;
 
+  // variables needed for glow/lights
   private MaterialPropertyBlock _propertyBlock;
   private int _emissonId;
   private float _blinkPeriod;
