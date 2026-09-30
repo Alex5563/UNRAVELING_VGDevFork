@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 971734ec7aa3448e58f8c00cba446766, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -93,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 20201, guid: 0000000000000000f000000000000000, type: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 6b9a80b35b33b436c811c7075f97b49d, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -348,7 +348,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -460,13 +460,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 469168411}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: -18, y: 20.2, z: -13.7}
+  m_LocalRotation: {x: 0.3565222, y: -0.5621081, z: -0.20867531, w: 0.7165062}
+  m_LocalPosition: {x: 42.9, y: 21, z: -1.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 16.04, y: -83.196, z: -46.735}
 --- !u!114 &469168414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -719,7 +719,7 @@ Transform:
   m_GameObject: {fileID: 657337663}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -21.84}
+  m_LocalPosition: {x: 0, y: 1, z: -40}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -757,6 +757,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Movement
   moveSpeed: 5
   gravity: -9.81
+  forwardSpeed: 0.5
 --- !u!143 &657337670
 CharacterController:
   m_ObjectHideFlags: 0
@@ -942,6 +943,14 @@ PrefabInstance:
       value: FireflyParticle
       objectReference: {fileID: 0}
     - target: {fileID: 7917535192070147477, guid: 3409e0202e3624352a5cfea1a1341a01, type: 3}
+      propertyPath: _minGlow
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 7917535192070147477, guid: 3409e0202e3624352a5cfea1a1341a01, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7917535192070147477, guid: 3409e0202e3624352a5cfea1a1341a01, type: 3}
       propertyPath: _moveSpeed
       value: 10
       objectReference: {fileID: 0}
@@ -950,8 +959,24 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7917535192070147477, guid: 3409e0202e3624352a5cfea1a1341a01, type: 3}
+      propertyPath: _glowRenderer
+      value: 
+      objectReference: {fileID: 1753300942}
+    - target: {fileID: 7917535192070147477, guid: 3409e0202e3624352a5cfea1a1341a01, type: 3}
       propertyPath: _hoveringTime
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7917535192070147477, guid: 3409e0202e3624352a5cfea1a1341a01, type: 3}
+      propertyPath: _glowIntensity
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7917535192070147477, guid: 3409e0202e3624352a5cfea1a1341a01, type: 3}
+      propertyPath: _warningPeriod
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 7917535192070147477, guid: 3409e0202e3624352a5cfea1a1341a01, type: 3}
+      propertyPath: _emissionProperty
+      value: _EmissionColor
       objectReference: {fileID: 0}
     - target: {fileID: 7917535192070147477, guid: 3409e0202e3624352a5cfea1a1341a01, type: 3}
       propertyPath: _maxHoverDistance
@@ -1251,6 +1276,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aec895e79022b42709d5a67434e6a875, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FireflyParticle
+--- !u!23 &1753300942 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5770378703900568595, guid: 3409e0202e3624352a5cfea1a1341a01, type: 3}
+  m_PrefabInstance: {fileID: 1245222867}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

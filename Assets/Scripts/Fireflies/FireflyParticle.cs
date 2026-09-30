@@ -48,6 +48,47 @@ public class FireflyParticle : MonoBehaviour
   [SerializeField]
   private float _hitRadius = 0.4f;
 
+  [Header("Glow")]
+  [SerializeField]
+  private Renderer _glowRenderer;
+
+  [SerializeField]
+  private Color _glowColor = new Color(1f, 0.85f, 0.3f);
+
+  [SerializeField]
+  private float _glowIntensity = 6f;
+
+  [SerializeField]
+  private float _minGlow = 0.5f;
+
+  [SerializeField]
+  private float _minBlinkPeriod = 1.2f;
+
+  [SerializeField]
+  private float _maxBlinkPeriod = 2.5f;
+
+  [SerializeField]
+  private float _flashDuration = 0.35f;
+
+  [SerializeField]
+  private float _warningTime = 1f;
+
+  [SerializeField]
+  private float _warningPeriod = 0.25f;
+
+  [SerializeField]
+  private string _emissionProperty = "_EmissionColor";
+
+  [Header("Light")]
+  [SerializeField]
+  private float _lightIntensity = 2f;
+
+  [SerializeField]
+  private float _lightOffThreshold = 0.02f;
+
+  [SerializeField]
+  private Light _glowLight;
+
   [Header("Safety")]
   [SerializeField]
   private float _maxLifetime = 20f;
@@ -65,9 +106,17 @@ public class FireflyParticle : MonoBehaviour
   private float _hoverDistance;
   private float _hoverSide;
   private float _bobSeed;
-  private Vector3 _driftVelocity;
   private Vector3 _lungeTarget;
   private float _lifetime;
+
+  private float _zOffset;
+  private float _zOffsetVelocity;
+  private Vector2 _hoverXY;
+
+  private MaterialPropertyBlock _propertyBlock;
+  private int _emissonId;
+  private float _blinkPeriod;
+  private float _blinkPhase;
 
   public void SetPool(IObjectPool<FireflyParticle> owningPool) => _pool = owningPool;
 
@@ -80,10 +129,42 @@ public class FireflyParticle : MonoBehaviour
     _state = FireflyState.Approach;
     _released = false;
     _laneVelocity = Vector2.zero;
-    _driftVelocity = Vector2.zero;
     _hoverTime = 0f;
     _lifetime = 0f;
     _bobSeed = Random.Range(0f, 100f);
+
+    _blinkPeriod = Random.Range(_minBlinkPeriod, _maxBlinkPeriod);
+    _blinkPhase = Random.value;
+    SetGlow(_minGlow);
+  }
+
+  private void Awake()
+  {
+    _propertyBlock = new MaterialPropertyBlock();
+    _emissonId = Shader.PropertyToID(_emissionProperty);
+
+    if (_glowRenderer == null)
+      _glowRenderer = GetComponentInChildren<Renderer>();
+
+    if (_glowLight == null)
+      _glowLight = GetComponentInChildren<Light>();
+    if (_glowLight != null)
+      _glowLight.color = _glowColor;
+
+    // if (_glowRenderer == null)
+    // {
+    //   Debug.LogWarning($"{name}: no glow renderer found");
+    // }
+    // else
+    // {
+    //   Material mat = _glowRenderer.sharedMaterial;
+    //   Debug.Log(
+    //     $"{name}: renderer={_glowRenderer.name}, "
+    //       + $"shader={(mat != null ? mat.shader.name : "none")}, "
+    //       + $"hasProperty={(mat != null && mat.HasProperty(_emissonId))}, "
+    //       + $"emissionKeyword={(mat != null && mat.IsKeywordEnabled("_EMISSION"))}"
+    //   );
+    // }
   }
 
   private void Despawn()
@@ -102,6 +183,8 @@ public class FireflyParticle : MonoBehaviour
   {
     if (_playerTarget == null || _hallway == null)
       return;
+
+    UpdateGlow();
 
     _lifetime += Time.deltaTime;
     if (_lifetime >= _maxLifetime)
@@ -122,6 +205,48 @@ public class FireflyParticle : MonoBehaviour
         UpdateHover();
         break;
     }
+  }
+
+  private void UpdateGlow()
+  {
+    float brightness;
+
+    if (_state == FireflyState.Attack)
+    {
+      brightness = 1f;
+    }
+    else
+    {
+      bool warning = _state == FireflyState.Hover && _hoverTime <= _warningTime;
+      float period = warning ? _warningPeriod : _blinkPeriod;
+
+      _blinkPhase += Time.deltaTime / period;
+      _blinkPhase -= Mathf.Floor(_blinkPhase);
+
+      float blinkTime = Mathf.Min(_flashDuration / period, 0.5f);
+      brightness = _blinkPhase < blinkTime ? Mathf.Sin(Mathf.PI * _blinkPhase / blinkTime) : 0f;
+    }
+
+    SetGlow(Mathf.Lerp(_minGlow, 1f, brightness));
+  }
+
+  private void SetGlow(float amount)
+  {
+    if (_glowLight != null)
+    {
+      bool lightOn = amount > _lightOffThreshold;
+      if (_glowLight.enabled != lightOn)
+        _glowLight.enabled = lightOn;
+      if (lightOn)
+        _glowLight.intensity = _lightIntensity * amount;
+    }
+
+    if (_glowRenderer == null)
+      return;
+
+    _glowRenderer.GetPropertyBlock(_propertyBlock);
+    _propertyBlock.SetColor(_emissonId, _glowColor * (_glowIntensity * amount));
+    _glowRenderer.SetPropertyBlock(_propertyBlock);
   }
 
   private void UpdateApproach()
@@ -152,25 +277,32 @@ public class FireflyParticle : MonoBehaviour
     _hoverTime = _hoveringTime;
     _hoverDistance = Random.Range(_minHoverDistance, _maxHoverDistance);
 
-    float myZ = _hallway.InverseTransformPoint(transform.position).z;
+    Vector3 localPos = _hallway.InverseTransformPoint(transform.position);
     float playerZ = _hallway.InverseTransformPoint(_playerTarget.position).z;
-    _hoverSide = Mathf.Sign(myZ - playerZ);
 
-    _driftVelocity = Vector3.zero;
+    _zOffset = localPos.z - playerZ;
+    _hoverSide = Mathf.Sign(_zOffset);
+    _hoverXY = new Vector2(localPos.x, localPos.y);
+
+    _zOffsetVelocity = 0f;
+    _laneVelocity = Vector2.zero;
   }
 
   private void UpdateHover()
   {
     float playerZ = _hallway.InverseTransformPoint(_playerTarget.position).z;
-    Vector3 localSpot = new Vector3(_lane.x, _lane.y, playerZ + _hoverSide * _hoverDistance);
-    Vector3 spot = _hallway.InverseTransformPoint(localSpot) + GetBobOffset();
 
-    transform.position = Vector3.SmoothDamp(
-      transform.position,
-      spot,
-      ref _driftVelocity,
+    _zOffset = Mathf.SmoothDamp(
+      _zOffset,
+      _hoverSide * _hoverDistance,
+      ref _zOffsetVelocity,
       _smoothDriftTime
     );
+
+    _hoverXY = Vector2.SmoothDamp(_hoverXY, _lane, ref _laneVelocity, _smoothDriftTime);
+
+    Vector3 localSpot = new Vector3(_hoverXY.x, _hoverXY.y, playerZ + _zOffset);
+    transform.position = _hallway.TransformPoint(localSpot) + GetBobOffset();
 
     _hoverTime -= Time.deltaTime;
     if (_hoverTime <= 0)
