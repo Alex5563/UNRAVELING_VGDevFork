@@ -89,10 +89,12 @@ public class BadParticle : MonoBehaviour
             {
                 Debug.Log("HIT");
                 if (paranoia != null) paranoia.Add(paranoiaIncrease);
+                AudioManager.instance.playOneShot("clay_hurt");
             }
             else
             {
                 Debug.Log("DODGED");
+                AudioManager.instance.playOneShot("clay_dodge", transform.position);  
             }
             StopAttacking();
         }
