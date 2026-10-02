@@ -56,7 +56,7 @@ public class BadParticle : MonoBehaviour
     //Called by BadParticleManager when this one is chosen
     public void Attack(Transform target)
     {
-        // offset only left/right 
+        // offset only left/right
         float side = Random.Range(-attackOffsetRange, attackOffsetRange);
         attackOffset = playerHead.right * side;
 
@@ -94,7 +94,7 @@ public class BadParticle : MonoBehaviour
             else
             {
                 Debug.Log("DODGED");
-                AudioManager.instance.playOneShot("clay_dodge", transform.position);  
+                AudioManager.instance.playOneShot("clay_dodge", transform.position);
             }
             StopAttacking();
         }
