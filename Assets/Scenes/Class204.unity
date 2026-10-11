@@ -1066,6 +1066,60 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1119559028}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &368827307
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 368827309}
+  - component: {fileID: 368827308}
+  m_Layer: 0
+  m_Name: LoseState
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &368827308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 368827307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ffd643893cec074b97ec8e923afcb7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LoseState
+  IsOver: 0
+  resetSpeed: 2
+  paranoia: {fileID: 1514480553}
+  cam: {fileID: 330585545}
+  look: {fileID: 1514480550}
+  lean: {fileID: 1514480551}
+  gaze: {fileID: 1514480552}
+  clock: {fileID: 984068094}
+  teacher: {fileID: 2057058723}
+  particles: {fileID: 76611494}
+--- !u!4 &368827309
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 368827307}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.54767, y: 1.79741, z: 4.92759}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &374072865
 GameObject:
   m_ObjectHideFlags: 0
@@ -2521,6 +2575,7 @@ MonoBehaviour:
   stage2Duration: 20
   stage3Duration: 30
   staredownDuration: 20
+  walkUpDuration: 3
 --- !u!4 &984068095
 Transform:
   m_ObjectHideFlags: 0
@@ -2691,7 +2746,6 @@ MonoBehaviour:
   zoneRT: {fileID: 1622959248}
   spinnerRT: {fileID: 2016090121}
   radiusOffSet: -0.5
-  skillCheckVisuals: {fileID: 0}
 --- !u!1 &1117998822
 GameObject:
   m_ObjectHideFlags: 0
@@ -5150,3 +5204,4 @@ SceneRoots:
   - {fileID: 2035755253}
   - {fileID: 1997964442}
   - {fileID: 1317260775}
+  - {fileID: 368827309}
