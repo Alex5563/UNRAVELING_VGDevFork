@@ -12,7 +12,7 @@ public class Minigame1 : MonoBehaviour {
     private Quaternion startRot;
     private float timer = 0f;
     private bool started = false;
-    private bool hasHit = false;
+    protected bool hasHit = false;
 
     void Start() {
         startPos = transform.position;
@@ -31,12 +31,9 @@ public class Minigame1 : MonoBehaviour {
     }
 
     void Update() {
-        // for testing
-        //if (Keyboard.current.tKey.wasPressedThisFrame){
-        //    StartMinigame();
-        //}
-        
+
         if (!started) {
+            StartMinigame();
             return;
         }
 
@@ -60,7 +57,7 @@ public class Minigame1 : MonoBehaviour {
         }
     }
 
-    IEnumerator MoveTo(Vector3 target) {
+    protected virtual IEnumerator MoveTo(Vector3 target) {
         hasHit = false;
         while (transform.position != target) {
             transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
@@ -68,7 +65,7 @@ public class Minigame1 : MonoBehaviour {
         }
     }
 
-    IEnumerator TurnAround() {
+    protected virtual IEnumerator TurnAround() {
         Quaternion target = transform.rotation * Quaternion.Euler(0f, 180f, 0f);
         while (transform.rotation != target) {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, target, 360f* Time.deltaTime);
