@@ -353,6 +353,7 @@ GameObject:
   m_Component:
   - component: {fileID: 616795697}
   - component: {fileID: 616795698}
+  - component: {fileID: 616795699}
   m_Layer: 0
   m_Name: Minigame1
   m_TagString: Untagged
@@ -396,6 +397,21 @@ MonoBehaviour:
   center: {fileID: 0}
   spawnRadius: 8
   player: {fileID: 0}
+--- !u!114 &616795699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 616795696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cda234a41741b1044973fb113f22637b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MinigameExit
+  mainSceneName: HallwayP1
+  endSceneName: Minigame1
+  isFinalMinigame: 0
 --- !u!1 &653347421
 GameObject:
   m_ObjectHideFlags: 0
@@ -1380,9 +1396,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DuckController
   _camera: {fileID: 1957340018}
+  _duckHeight: 0.6
   _duckPitch: 50
   _duckedSpeedMultiplier: 0.5
   _duckDownDuration: 0.12
+  _duckHoldDuration: 0.25
   _duckUpDuration: 0.2
   _recoveryDuration: 0.5
 --- !u!114 &1828395571

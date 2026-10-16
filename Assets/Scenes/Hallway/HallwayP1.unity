@@ -144,7 +144,7 @@ Transform:
   m_GameObject: {fileID: 75073865}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.22, y: -2.87, z: -0.88}
+  m_LocalPosition: {x: 1.22, y: -2.87, z: 3.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -509,13 +509,13 @@ MonoBehaviour:
   checkpoints:
   - point: {fileID: 2109632796}
     sceneName: Minigame1
-    radius: 2
+    radius: 4
   - point: {fileID: 75073866}
     sceneName: Minigame2
-    radius: 2
+    radius: 4
   - point: {fileID: 879541979}
     sceneName: Minigame3
-    radius: 2
+    radius: 4
 --- !u!4 &707667226
 Transform:
   m_ObjectHideFlags: 0
@@ -525,7 +525,7 @@ Transform:
   m_GameObject: {fileID: 707667224}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.26, y: 4.99434, z: -2.35}
+  m_LocalPosition: {x: 1.26, y: 4.99434, z: -2.26}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -671,7 +671,7 @@ Transform:
   m_GameObject: {fileID: 879541978}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.541, z: 0.655}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1521,9 +1521,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DuckController
   _camera: {fileID: 1564792477}
+  _duckHeight: 0.6
   _duckPitch: 50
   _duckedSpeedMultiplier: 0.5
   _duckDownDuration: 0.12
+  _duckHoldDuration: 0.25
   _duckUpDuration: 0.2
   _recoveryDuration: 0.5
 --- !u!114 &2046812483
@@ -1728,7 +1730,7 @@ Transform:
   m_GameObject: {fileID: 2076868042}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -3.74, z: 10.12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1837,7 +1839,7 @@ Transform:
   m_GameObject: {fileID: 2109632795}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.79, z: -10.31}
+  m_LocalPosition: {x: 0, y: -4.24, z: -14.76}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
