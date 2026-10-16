@@ -545,6 +545,11 @@ MonoBehaviour:
   speed: 15
   dashDistance: 20
   delay: 1
+  warningDelay: 1
+  overshoot: 6
+  center: {fileID: 0}
+  spawnRadius: 8
+  player: {fileID: 0}
 --- !u!1 &724308562
 GameObject:
   m_ObjectHideFlags: 0
@@ -1049,6 +1054,11 @@ MonoBehaviour:
   speed: 5
   dashDistance: 20
   delay: 1
+  warningDelay: 1
+  overshoot: 6
+  center: {fileID: 724308563}
+  spawnRadius: 8
+  player: {fileID: 570214996}
 --- !u!1 &1602501755
 GameObject:
   m_ObjectHideFlags: 0
