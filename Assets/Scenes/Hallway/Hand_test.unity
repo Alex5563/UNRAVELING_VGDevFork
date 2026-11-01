@@ -405,7 +405,8 @@ MonoBehaviour:
   swayTilt: 4
   maxTilt: 25
   hitRadius: 0.4
-  swatCooldown: 0.75
+  swatCooldown: 0.5
+  minimumSwatSpeed: 15
   hits: 0
 --- !u!1 &1353749724
 GameObject:

@@ -13,7 +13,8 @@ public class HandController : MonoBehaviour
     [SerializeField] float maxTilt = 25f;
     [Header("Swat")]
     [SerializeField] float hitRadius = 0.4f;
-    [SerializeField] float swatCooldown = 0.75f;
+    [SerializeField] float swatCooldown = 0.50f;
+    [SerializeField] float minimumSwatSpeed = 15f;
 
     [Header("Stats")]
     public int hits;
@@ -34,6 +35,13 @@ public class HandController : MonoBehaviour
     {
         float dt = Mathf.Min(Time.deltaTime, 0.05f);
 
+        if (dt <= 0f)
+        {
+            return;
+        }
+        // Remember where the hand started
+        Vector3 previousPosition = transform.position;
+
         // physics formula for hand 
         Vector3 acceleration = stiffness * (GetTarget() - transform.position) - damping * velocity; 
         velocity += acceleration * dt;
@@ -42,11 +50,15 @@ public class HandController : MonoBehaviour
 
         UpdateRotation(dt);
           
-        if (Input.GetMouseButtonDown(0) && cooldown <= 0f)
+        // A fast hand movement triggers the swat
+        if (velocity.magnitude >= minimumSwatSpeed && cooldown <= 0f)
         {
-            Debug.Log("MOUSE CLICKED");
-            cooldown = swatCooldown;
-            Swat();
+            bool hitSomething = Swat(previousPosition);
+
+            if (hitSomething)
+            {
+                cooldown = swatCooldown;
+            }
         }
     }
 
@@ -64,26 +76,35 @@ public class HandController : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, target, t);
     }
 
-    void Swat()
+    bool Swat(Vector3 previousPosition)
     {
-        Collider[] found = Physics.OverlapSphere(transform.position, hitRadius);
+        //changed to capsule to check path from prev to current position
+        Collider[] found = Physics.OverlapCapsule(previousPosition, transform.position, hitRadius, Physics.AllLayers, QueryTriggerInteraction.Collide);
         Debug.Log("Colliders found: " + found.Length);
+
+        bool hitSomething = false;
+
+        // Track fireflies hit during this swat so each one counts only once
+        var hitThisSwat = new System.Collections.Generic.HashSet<FireflyParticle>();
 
         foreach (Collider c in found)
         {
-            // dont detect the hand itself
-            if (c.transform == transform)
+            // dont detect the hand itself and children objects
+            if (c.transform == transform || c.transform.IsChildOf(transform))
                 continue;
             Debug.Log("Found collider: " + c.name);
             
-           if (c.TryGetComponent(out FireflyParticle f))
+            FireflyParticle firefly = c.GetComponentInParent<FireflyParticle>();
+           if (firefly != null && hitThisSwat.Add(firefly))
             {
                 Debug.Log("FOUND FIREFLY!");
                 hits++;
-                f.Despawn();
+                firefly.Despawn();
+                hitSomething = true;
                 Debug.Log("HIT " + hits);
             }
         }
+        return hitSomething;
     }
 
     // Helper method that works out where the hand wants to be
@@ -99,7 +120,6 @@ public class HandController : MonoBehaviour
     //to visually show the hit radius when gizmos is turned on
     void OnDrawGizmos()
     {
-        Debug.Log("gizmo drawing");
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, hitRadius);
     }
